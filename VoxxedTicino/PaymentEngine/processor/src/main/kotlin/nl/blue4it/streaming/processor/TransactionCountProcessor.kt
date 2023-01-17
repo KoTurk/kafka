@@ -20,7 +20,22 @@ class TransactionCountProcessor : Processor<CustomerId, Message, CustomerId, Int
     private lateinit var kvStore: KeyValueStore<CustomerId, Int>
 
     override fun init(context: ProcessorContext<CustomerId, Int>) {
-       // 7 add puntuator
+        // 7 add puntuator
+        context.schedule(Duration.ofSeconds(1), PunctuationType.STREAM_TIME) { timestamp: Long ->
+            println("-----------Punctuator called---------")
+
+            kvStore.all().use { iter ->
+                while (iter.hasNext()) {
+                    val transaction = iter.next()
+                    println("Timestamp: $timestamp")
+                    println("Key: " + transaction.key)
+                    println("Value: " + transaction.value)
+                    println()
+
+                    context.forward(Record(transaction.key, transaction.value, timestamp))
+                }
+            }
+        }
 
         kvStore = context.getStateStore("TransactionOverviewStore")
     }
