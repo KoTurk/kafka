@@ -1,0 +1,40 @@
+{
+  "type": "record",
+  "name": "Payment",
+  "namespace": "example.avro",
+  "fields": [
+    {
+      "name": "name",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "iban",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "toIban",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "amount",
+      "type": "float"
+    },
+    {
+      "name": "balance",
+      "type": "float"
+    },
+    {
+      "name": "processed",
+      "type": "boolean"
+    }
+  ]
+}

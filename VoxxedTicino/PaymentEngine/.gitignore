@@ -1,0 +1,21 @@
+.DS_Store
+
+*.class
+
+bin/
+.settings/
+
+# Eclipse files
+.project
+.classpath
+.metadata/
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+atlassian-ide-plugin.xml
+
+# Maven files
+target/

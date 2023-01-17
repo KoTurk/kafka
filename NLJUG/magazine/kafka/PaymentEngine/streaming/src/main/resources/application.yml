@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: payment-engine
+  kafka:
+    streams:
+      properties:
+        schema:
+          registry:
+            url: http://localhost:8085
+        default:
+          key:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+          value:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+        specific:
+          avro:
+            reader: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+server:
+  port: 0

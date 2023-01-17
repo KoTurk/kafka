@@ -1,0 +1,11 @@
+POST http://localhost:52414
+Content-Type: application/json
+
+{
+  "name": 100.00,
+  "balance": 500.00,
+  "amount": 500.00,
+  "iban": "NL61EVIL0332546754",
+  "toIban": "NL61RABO0332543675",
+  "processed": true
+}

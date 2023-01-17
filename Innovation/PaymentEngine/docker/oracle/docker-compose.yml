@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  oracle-db:
+    image: oracleinanutshell/oracle-xe-11g:latest
+    ports:
+      - 1521:1521
+      - 5500:5500

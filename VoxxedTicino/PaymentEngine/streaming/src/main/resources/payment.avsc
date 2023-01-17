@@ -1,0 +1,13 @@
+// 1.1 create avro payment
+{"namespace": "example.avro",
+  "type": "record",
+  "name": "Payment",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "iban", "type":  "string"},
+    {"name": "toIban", "type":  "string"},
+    {"name": "amount", "type":  "float"},
+    {"name": "balance", "type":  "float"},
+    {"name": "processed", "type":  "boolean"}
+  ]
+}
