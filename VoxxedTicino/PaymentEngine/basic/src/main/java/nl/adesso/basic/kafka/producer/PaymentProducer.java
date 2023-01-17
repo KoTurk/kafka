@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class PaymentProducer {
 
     // 2.2 Create Kafka <String, Payment> Template
+    private final KafkaTemplate<Account, Payment> kafkaTemplate;
 
     public boolean processPayment(Payment payment) {
         sendTransaction(getAccountFromCookie(), payment);
@@ -30,15 +31,20 @@ public class PaymentProducer {
 
         if (payment.getIban().equals("NL61EVIL0332546754")) {
             // 2.5 create filter exception
-
+            FilterException up = new FilterException("oh no help me");
 
             // 2.4 Create counter
-
+            Counter.builder("a.message.exception")
+                                .tag("exception", up.getMessage())
+                                .register(Metrics.globalRegistry)
+                                .increment();
 
             // throw the exception
+            throw up;
         }
 
         // 2.3 Send to topic "payments" and send payment
+        kafkaTemplate.send("payments", key, payment);
     }
 
     private Account getAccountFromCookie() {
