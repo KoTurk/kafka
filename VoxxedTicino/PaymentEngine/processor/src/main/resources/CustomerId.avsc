@@ -1,0 +1,8 @@
+{"namespace": "example.avro",
+  "type": "record",
+  "name": "CustomerId",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "iban", "type":  "string"}
+  ]
+}

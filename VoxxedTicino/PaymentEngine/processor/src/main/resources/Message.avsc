@@ -1,0 +1,12 @@
+{"namespace": "example.avro",
+  "type": "record",
+  "name": "Message",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "toIban", "type":  "string"},
+    {"name": "fromIban", "type":  "string"},
+    {"name": "amount", "type":  "float"},
+    {"name": "datetime", "type":  "long"},
+    {"name": "processed", "type":  "boolean"}
+  ]
+}

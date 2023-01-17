@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: payment-engine
+  kafka:
+    consumer:
+      key-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      properties.spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    properties:
+      schema.registry.url: http://localhost:8081
+      specific.avro.reader: true
