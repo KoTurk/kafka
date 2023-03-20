@@ -14,23 +14,40 @@ public class PaymentKStreams {
 
     public static KStream<Account, Payment> getPaymentKStream(StreamsBuilder builder) {
         // 4.1 Create stream payments
+        KStream<Account, Payment> paymentKStream = builder.stream("payments");
 
         // 4.8 create table balances
+        KTable<Account, Balance> balances = builder.table("balance");
 
         // 4.2 peek and create metrics
+        paymentKStream.peek((key,payment) -> {
+                    System.out.println("Checking balance");
+                    Counter.builder("a.message.count")
+                            .tag("bankcode", payment.getIban().substring(4, 8))
+                            .register(Metrics.globalRegistry)
+                            .increment();
+                    //http://localhost:8081/actuator/metrics/a.message.count?tag=bankcode:RABO
+                })
 
         // 4.9 join balance
+        .join(balances, PaymentKStreams::enhancedPayment)
 
         // 4.3 filter balance and amount
+        .filter((key, payment) -> payment.getBalance() >= payment.getAmount())
 
         // 4.4 mapValues
+         .mapValues((key, payment) -> new Fraud(payment.getIban()))
 
         // 4.5 peek balance ok
+        .peek((key,payment) -> {
+                    System.out.println("Sending to Fraud stream");
+                })
 
         // 4.6 to topic fraud
+         .to("fraud");
 
         // 4.7 return stream
-        return null;
+        return paymentKStream;
     }
 
     private static Payment enhancedPayment(Payment payment, Balance balance) {

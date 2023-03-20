@@ -2,34 +2,12 @@ spring:
   application:
     name: payment-engine
   kafka:
-    bootstrap-servers: <url>
-    security:
-      protocol: SSL
     streams:
-      security:
-        protocol: SSL
-      ssl:
-        key-store-location: classpath:client.keystore.jks
-        key-password: <password>
-        key-store-password: <password>
-        trust-store-location: classpath:kafka.truststore.jks
-        trust-store-password: <password>
-        key-store-type: jks
-        trust-store-type: jks
-        protocol: TLSv1.2
       properties:
-        default:
-          key:
-            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
-          value:
-            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
-        ssl:
-          endpoint:
-            identification:
-              algorithm:
         schema:
           registry:
-            url: <url>
+            url: http://localhost:8081
+        default:
           key:
             serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
           value:
@@ -44,6 +22,11 @@ spring:
           production:
             exception:
               handler: "nl.adesso.streaming.exception.handler.CustomProductionExceptionHandler"
+
+        specific:
+          avro:
+            reader: true
+
 management:
   endpoints:
     web:
