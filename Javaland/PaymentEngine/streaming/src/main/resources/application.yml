@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: payment-engine
+  kafka:
+    streams:
+      properties:
+        schema:
+          registry:
+            url: http://localhost:8081
+        default:
+          key:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+          value:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+          # great read for understanding exception handling
+          # https://developer.confluent.io/learn-kafka/kafka-streams/error-handling/
+          deserialization:
+              exception:
+                handler: "org.apache.kafka.streams.errors.LogAndContinueExceptionHandler"
+                # Or implement the interface DeserializationExceptionHandler and override method handle()
+          production:
+            exception:
+              handler: "nl.adesso.streaming.exception.handler.CustomProductionExceptionHandler"
+
+        specific:
+          avro:
+            reader: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+server:
+  port: 52415
