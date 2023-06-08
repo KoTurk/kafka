@@ -1,0 +1,9 @@
+// 1.3 create avro balance
+{"namespace": "example.avro",
+  "type": "record",
+  "name": "Balance",
+  "fields": [
+    {"name": "amount", "type":  "float"},
+    {"name": "currency", "type":  "string"}
+  ]
+}

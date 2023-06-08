@@ -1,0 +1,9 @@
+// 1.2 create avro account
+{"namespace": "example.avro",
+  "type": "record",
+  "name": "Account",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "iban", "type":  "string"}
+  ]
+}

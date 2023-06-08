@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: payment-engine
+  kafka:
+    bootstrap-servers: SSL://<url>:9093
+    security:
+      protocol: SSL
+    streams:
+      security:
+        protocol: SSL
+      ssl:
+        key-store-location: classpath:client.keystore.jks
+        key-password: <password>
+        key-store-password: <password>
+        trust-store-location: classpath:kafka.truststore.jks
+        trust-store-password: <password>
+        key-store-type: jks
+        trust-store-type: jks
+        protocol: TLSv1.2
+      properties:
+        default:
+          key:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+          value:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+        ssl:
+          endpoint:
+            identification:
+              algorithm:
+        schema:
+          registry:
+            url: http://<url>:8081
+          key:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+          value:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+          # great read for understanding exception handling
+          # https://developer.confluent.io/learn-kafka/kafka-streams/error-handling/
+          deserialization:
+              exception:
+                handler: "org.apache.kafka.streams.errors.LogAndContinueExceptionHandler"
+                # Or implement the interface DeserializationExceptionHandler and override method handle()
+          production:
+            exception:
+              handler: "nl.adesso.streaming.exception.handler.CustomProductionExceptionHandler"
+    producer:
+      key-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    consumer:
+      key-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+server:
+  port: 52415

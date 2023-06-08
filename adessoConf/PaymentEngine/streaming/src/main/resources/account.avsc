@@ -1,0 +1,9 @@
+// 1.1 avro payment
+{"namespace": "example.avro",
+  "type": "record",
+  "name": "Account",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "iban", "type":  "string"}
+  ]
+}
